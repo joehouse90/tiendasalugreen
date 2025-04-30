@@ -1,0 +1,92 @@
+/* Fondo general con imagen y degradado de respaldo */
+body {
+    background-color: #f0f8ff; /* Un color suave para el fondo */
+    font-family: 'Roboto', sans-serif;
+}
+
+
+/* Títulos */
+h1, h2, h3 {
+    color: #333;
+}
+
+/* Botones */
+.btn {
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004a99;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+/* Productos */
+.producto {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo translúcido */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cargarProducto 0.5s forwards;
+}
+
+.producto:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.producto h3 {
+    font-size: 1.5rem;
+}
+
+.producto button {
+    margin-top: 10px;
+}
+
+/* Carrito */
+#carrito {
+    background-color: rgba(240, 248, 255, 0.95); /* fondo pastel claro con transparencia */
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#carrito li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#carrito li:last-child {
+    border-bottom: none;
+}
+
+/* Animación al cargar productos */
+@keyframes cargarProducto {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
