@@ -97,7 +97,6 @@ function mostrarCarrito() {
     console.log(`Total calculado: $${totalConIva.toFixed(2)}`);
 }
 
-
 // Función para eliminar producto del carrito
 function eliminarProducto(index) {
     const productoEliminado = carrito[index].nombre;
@@ -130,6 +129,7 @@ function iniciarCompra() {
     }
     mostrarCarrito();
 }
+
 // Función para finalizar la compra
 function finalizarCompra() {
     if (carrito.length === 0) {
@@ -162,12 +162,13 @@ function calcularTotalConIVA() {
     return total * (1 + IVA);
 }
 
-
+// Función para mostrar el carrito cuando se haga clic en el botón "Ver Carrito"
+function verCarrito() {
+    mostrarCarrito(); // Llama a la función que ya tienes definida para mostrar el carrito
+}
 
 // Llamar a la función para mostrar productos al cargar la página
 window.onload = mostrarProductos;
-
-
 
 
 
