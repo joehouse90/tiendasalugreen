@@ -1,46 +1,42 @@
-/* Fondo general con imagen y degradado de respaldo */
 body {
-    background-color: #f0f8ff; /* Un color suave para el fondo */
+    background-color: #e6f2ea;
     font-family: 'Roboto', sans-serif;
 }
 
-
-/* Títulos */
 h1, h2, h3 {
-    color: #333;
+    color: #2e7d32;
 }
 
-/* Botones */
 .btn {
     font-size: 1.1rem;
+    border-radius: 25px;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #4caf50;
+    border-color: #4caf50;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004a99;
+    background-color: #388e3c;
+    border-color: #2e7d32;
 }
 
 .btn-danger:hover {
-    background-color: #c82333;
+    background-color: #c62828;
 }
 
 .btn-info:hover {
-    background-color: #138496;
+    background-color: #1976d2;
 }
 
-/* Productos */
 .producto {
-    border: 1px solid #dee2e6;
-    border-radius: 10px;
+    border: 1px solid #a5d6a7;
+    border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo translúcido */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: #ffffffcc;
+    box-shadow: 0 6px 12px rgba(46, 125, 50, 0.25);
     transition: transform 0.2s, box-shadow 0.2s;
     opacity: 0;
     transform: translateY(20px);
@@ -49,44 +45,36 @@ h1, h2, h3 {
 
 .producto:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(46, 125, 50, 0.4);
 }
 
-.producto h3 {
-    font-size: 1.5rem;
-}
-
-.producto button {
-    margin-top: 10px;
-}
-
-/* Carrito */
 #carrito {
-    background-color: rgba(240, 248, 255, 0.95); /* fondo pastel claro con transparencia */
-    border-radius: 10px;
+    background-color: #f9fbe7cc;
+    border-radius: 15px;
     padding: 20px;
-    border: 1px solid #ddd;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dcedc8;
+    box-shadow: 0 6px 12px rgba(76, 175, 80, 0.2);
     margin-top: 20px;
 }
 
 #carrito li {
     padding: 10px;
     margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dcedc8;
 }
 
 #carrito li:last-child {
     border-bottom: none;
 }
 
-/* Animación al cargar productos */
 @keyframes cargarProducto {
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
+
+
 
 
 
