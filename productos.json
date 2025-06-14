@@ -1,0 +1,9 @@
+[
+  { "nombre": "Manzanas Orgánicas", "precio": 120, "descripcion": "Manzanas frescas y orgánicas, 1 kg.", "stock": 20 },
+  { "nombre": "Almendras Naturales", "precio": 300, "descripcion": "Almendras crudas sin sal, 500 g.", "stock": 15 },
+  { "nombre": "Quinoa", "precio": 250, "descripcion": "Quinoa orgánica certificada, 1 kg.", "stock": 10 },
+  { "nombre": "Aceite de Oliva Extra Virgen", "precio": 450, "descripcion": "Botella 500 ml, prensado en frío.", "stock": 12 },
+  { "nombre": "Miel Natural", "precio": 200, "descripcion": "Miel pura, 350 g.", "stock": 18 },
+  { "nombre": "Té Verde Orgánico", "precio": 180, "descripcion": "Bolsa de té verde 50 g.", "stock": 25 },
+  { "nombre": "Barra de Cereal Integral", "precio": 90, "descripcion": "Barra con avena y frutos secos.", "stock": 30 }
+]

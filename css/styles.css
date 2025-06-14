@@ -1,3 +1,4 @@
+/* Estilos generales */
 body {
     background-color: #e6f2ea;
     font-family: 'Roboto', sans-serif;
@@ -7,6 +8,7 @@ h1, h2, h3 {
     color: #2e7d32;
 }
 
+/* Botones */
 .btn {
     font-size: 1.1rem;
     border-radius: 25px;
@@ -30,6 +32,7 @@ h1, h2, h3 {
     background-color: #1976d2;
 }
 
+/* Tarjeta de producto */
 .producto {
     border: 1px solid #a5d6a7;
     border-radius: 15px;
@@ -48,6 +51,7 @@ h1, h2, h3 {
     box-shadow: 0 8px 16px rgba(46, 125, 50, 0.4);
 }
 
+/* Carrito */
 #carrito {
     background-color: #f9fbe7cc;
     border-radius: 15px;
@@ -67,14 +71,13 @@ h1, h2, h3 {
     border-bottom: none;
 }
 
+/* Animación de carga */
 @keyframes cargarProducto {
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
-
-
 
 
 

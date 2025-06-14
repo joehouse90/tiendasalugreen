@@ -1,18 +1,28 @@
-const COSTO_ENVIO = 100;  // Cargo fijo por envío
-const MINIMO_ENVIO_GRATIS = 1000; // Monto mínimo para envío gratis
+const COSTO_ENVIO = 100;
+const MINIMO_ENVIO_GRATIS = 1000;
+
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 let nombreCliente = localStorage.getItem("nombreCliente") || "";
+let productos = [];
 
-const productos = [
-    { nombre: "Manzanas Orgánicas", precio: 120, descripcion: "Manzanas frescas y orgánicas, 1 kg.", stock: 20 },
-    { nombre: "Almendras Naturales", precio: 300, descripcion: "Almendras crudas sin sal, 500 g.", stock: 15 },
-    { nombre: "Quinoa", precio: 250, descripcion: "Quinoa orgánica certificada, 1 kg.", stock: 10 },
-    { nombre: "Aceite de Oliva Extra Virgen", precio: 450, descripcion: "Botella 500 ml, prensado en frío.", stock: 12 },
-    { nombre: "Miel Natural", precio: 200, descripcion: "Miel pura, 350 g.", stock: 18 },
-    { nombre: "Té Verde Orgánico", precio: 180, descripcion: "Bolsa de té verde 50 g.", stock: 25 },
-    { nombre: "Barra de Cereal Integral", precio: 90, descripcion: "Barra con avena y frutos secos.", stock: 30 }
-];
+// Cargar productos desde JSON externo
+function cargarProductos() {
+    return fetch('productos.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Error al cargar productos');
+            return response.json();
+        })
+        .then(data => {
+            productos = data;
+            mostrarProductos();
+        })
+        .catch(error => {
+            console.error(error);
+            mostrarMensaje("No se pudieron cargar los productos", "error");
+        });
+}
 
+// Mostrar productos en el DOM
 function mostrarProductos() {
     const contenedor = document.getElementById("productos");
     contenedor.innerHTML = "";
@@ -41,6 +51,7 @@ function mostrarProductos() {
     });
 }
 
+// Agregar producto al carrito
 function agregarProducto(index) {
     const producto = productos[index];
     const existente = carrito.find(item => item.nombre === producto.nombre);
@@ -61,6 +72,7 @@ function agregarProducto(index) {
     mostrarProductos();
 }
 
+// Mostrar contenido del carrito
 function mostrarCarrito() {
     const lista = document.getElementById("carrito");
     lista.innerHTML = "";
@@ -86,18 +98,10 @@ function mostrarCarrito() {
         cantidadTotal += producto.cantidad;
     });
 
-    // Aplicamos descuento si comprás más de 5 productos
-    let descuento = 0;
-    if (cantidadTotal > 5) {
-        descuento = totalSinDescuento * 0.10;  // 10% de descuento
-    }
-
-    let totalConDescuento = totalSinDescuento - descuento;
-
-    // Aplicar costo de envío si total menor a $1000
-    let costoEnvio = totalConDescuento < MINIMO_ENVIO_GRATIS ? COSTO_ENVIO : 0;
-
-    let totalFinal = totalConDescuento + costoEnvio;
+    const descuento = cantidadTotal > 5 ? totalSinDescuento * 0.10 : 0;
+    const totalConDescuento = totalSinDescuento - descuento;
+    const costoEnvio = totalConDescuento < MINIMO_ENVIO_GRATIS ? COSTO_ENVIO : 0;
+    const totalFinal = totalConDescuento + costoEnvio;
 
     document.getElementById("total").innerHTML = `
         Subtotal: $${totalSinDescuento.toFixed(2)}<br/>
@@ -107,6 +111,9 @@ function mostrarCarrito() {
     `;
 }
 
+
+
+// Eliminar producto del carrito
 function eliminarProducto(index) {
     carrito.splice(index, 1);
     guardarCarrito();
@@ -114,24 +121,43 @@ function eliminarProducto(index) {
     mostrarProductos();
 }
 
+// Vaciar carrito con confirmación
 function vaciarCarrito() {
-    carrito = [];
-    guardarCarrito();
-    mostrarCarrito();
-    mostrarProductos();
+    Swal.fire({
+        title: '¿Vaciar carrito?',
+        text: "Se eliminarán todos los productos.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, vaciar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            carrito = [];
+            guardarCarrito();
+            mostrarCarrito();
+            mostrarProductos();
+            Swal.fire({
+                text: 'Carrito vaciado',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    });
 }
 
+// Finalizar compra con validaciones y confirmación
 function finalizarCompra() {
     const inputNombre = document.getElementById("nombreCliente");
     const nombre = inputNombre.value.trim();
 
     if (carrito.length === 0) {
-        mostrarMensaje("Agregá productos antes de finalizar la compra.", "danger");
+        mostrarMensaje("Agregá productos antes de finalizar la compra.", "warning");
         return;
     }
 
     if (nombre === "") {
-        mostrarMensaje("Por favor, ingresá tu nombre.", "danger");
+        mostrarMensaje("Por favor, ingresá tu nombre.", "warning");
         return;
     }
 
@@ -140,36 +166,72 @@ function finalizarCompra() {
     const totalSinDescuento = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
     const cantidadTotal = carrito.reduce((acc, p) => acc + p.cantidad, 0);
 
-    let descuento = 0;
-    if (cantidadTotal > 5) {
-        descuento = totalSinDescuento * 0.10;
-    }
+    let descuento = cantidadTotal > 5 ? totalSinDescuento * 0.10 : 0;
     let totalConDescuento = totalSinDescuento - descuento;
-
     let costoEnvio = totalConDescuento < MINIMO_ENVIO_GRATIS ? COSTO_ENVIO : 0;
-
     let totalFinal = totalConDescuento + costoEnvio;
 
-    mostrarMensaje(`Gracias por tu compra, ${nombre}. Total a pagar: $${totalFinal.toFixed(2)}`, "success");
-    vaciarCarrito();
+    const listaProductos = carrito.map(p => `<li>${p.nombre} x ${p.cantidad}</li>`).join('');
+
+    Swal.fire({
+        title: `¡Gracias por tu compra, ${nombre}!`,
+        html: `
+            <p><strong>Total a pagar:</strong> $${totalFinal.toFixed(2)}</p>
+            <p><strong>Resumen:</strong></p>
+            <ul style="text-align: left; margin-left: 1rem;">${listaProductos}</ul>
+        `,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    }).then(() => {
+        vaciarCarrito();
+    });
 }
 
-function verCarrito() {
-    mostrarCarrito();
-}
 
+// Guardar carrito en localStorage
 function guardarCarrito() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
+// Mostrar mensajes con SweetAlert
 function mostrarMensaje(mensaje, tipo) {
-    const div = document.getElementById("mensaje");
-    div.innerHTML = `<div class="alert alert-${tipo}" role="alert">${mensaje}</div>`;
-    setTimeout(() => div.innerHTML = "", 4000);
+    Swal.fire({
+        text: mensaje,
+        icon: tipo, // 'success', 'error', 'warning', 'info'
+        showConfirmButton: false,
+        timer: 3000
+    });
 }
 
+function verCarrito() {
+    if (carrito.length === 0) {
+        Swal.fire({
+            title: "Carrito vacío",
+            icon: "info"
+        });
+        return;
+    }
+
+    let contenido = "";
+    let total = 0;
+
+    carrito.forEach(p => {
+        contenido += `${p.nombre} - $${p.precio} x ${p.cantidad}<br/>`;
+        total += p.precio * p.cantidad;
+    });
+
+    Swal.fire({
+        title: "Tu Carrito",
+        html: contenido + `<hr><strong>Total: $${total.toFixed(2)}</strong>`,
+        icon: "info",
+        confirmButtonText: "Cerrar"
+    });
+}
+
+
+// Inicialización al cargar la página
 window.onload = () => {
-    mostrarProductos();
+    cargarProductos();
     mostrarCarrito();
 
     const inputNombre = document.getElementById("nombreCliente");
@@ -177,7 +239,6 @@ window.onload = () => {
         inputNombre.value = nombreCliente;
     }
 };
-
 
 
 

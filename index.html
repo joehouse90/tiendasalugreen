@@ -4,36 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tienda de Comida Saludable</title>
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
     <div class="container my-5">
         <h1 class="text-center mb-4">Tienda de Comida Saludable</h1>
-
         <p>Elegí tus productos naturales favoritos y gestioná tu carrito con facilidad.</p>
 
+        <!-- Productos -->
         <div id="productos" class="row mt-4"></div>
 
+        <!-- Carrito -->
         <h2 class="mt-5">Carrito de Compras</h2>
         <ul id="carrito" class="list-group mb-3"></ul>
         <p id="total" class="font-weight-bold"></p>
 
+        <!-- Formulario de nombre -->
         <div class="form-group">
             <label for="nombreCliente">Tu nombre:</label>
             <input type="text" id="nombreCliente" class="form-control" placeholder="Escribí tu nombre" />
         </div>
 
-        <button class="btn btn-danger" onclick="vaciarCarrito()">Vaciar Carrito</button>
-        <button class="btn btn-info" onclick="verCarrito()">Ver Carrito</button>
-        <button class="btn btn-success" onclick="finalizarCompra()">Finalizar Compra</button>
+        <!-- Botones de acción -->
+        <div class="mb-4">
+            <button class="btn btn-danger mr-2" onclick="vaciarCarrito()">Vaciar Carrito</button>
+            <button class="btn btn-info mr-2" onclick="verCarrito()">Ver Carrito</button>
+            <button class="btn btn-success" onclick="finalizarCompra()">Finalizar Compra</button>
+        </div>
 
+        <!-- Mensajes -->
         <div id="mensaje" class="mt-3"></div>
     </div>
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Lógica JS -->
     <script src="js/script.js"></script>
 </body>
 </html>
+
 
 
 
